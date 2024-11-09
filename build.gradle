@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        maven {
+            url = 'https://snapshots.elastic.co/maven/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.elasticsearch.gradle:build-tools:${pluginApiVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'elasticsearch.esplugin'
+
+// 生成 plugin-descriptor.properties
+esplugin {
+    name 'analysis-hanlp'
+    description 'HanLP Analyzer for Elasticsearch'
+    classname 'org.elasticsearch.plugin.analysis.hanlp.AnalysisHanLPPlugin'
+}
+
+group 'org.elasticsearch'
+version "${pluginApiVersion}"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.hankcs:hanlp:portable-1.8.4"
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+}
+
+assemble {
+    doLast {
+        file("build/distributions/analysis-hanlp-${pluginApiVersion}.zip").renameTo(file("build/distributions/elasticsearch-analysis-hanlp-${pluginApiVersion}.zip"))
+        ant.checksum file: "build/distributions/elasticsearch-analysis-hanlp-${pluginApiVersion}.zip"
+    }
+}

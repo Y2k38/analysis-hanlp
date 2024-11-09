@@ -1,0 +1,23 @@
+.DS_Store
+.vscode
+.idea
+.gradle
+.venv
+
+build
+target
+
+# cache file
+*.bin
+*.dat
+*.value
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Eclipse project folder
+.settings/
+
+*.class
