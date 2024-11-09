@@ -3,7 +3,7 @@ package org.elasticsearch.plugin.analysis.hanlp.lucene;
 import com.hankcs.hanlp.model.perceptron.PerceptronLexicalAnalyzer;
 import com.hankcs.hanlp.seg.Segment;
 import org.apache.lucene.analysis.Analyzer;
-import org.elasticsearch.plugin.analysis.hanlp.ConfigurationSub;
+import org.elasticsearch.plugin.analysis.hanlp.cfg.Configuration;
 import org.elasticsearch.plugin.analysis.hanlp.model.PerceptronCWSInstance;
 import org.elasticsearch.plugin.analysis.hanlp.model.PerceptronNERInstance;
 import org.elasticsearch.plugin.analysis.hanlp.model.PerceptronPOSInstance;
@@ -22,9 +22,9 @@ public class HanLPNLPAnalyzer extends Analyzer {
     /**
      * 分词配置
      */
-    private final ConfigurationSub configuration;
+    private final Configuration configuration;
 
-    public HanLPNLPAnalyzer(ConfigurationSub configuration) {
+    public HanLPNLPAnalyzer(Configuration configuration) {
         super();
         this.configuration = configuration;
     }

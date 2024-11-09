@@ -5,6 +5,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.analysis.AbstractIndexAnalyzerProvider;
+import org.elasticsearch.plugin.analysis.hanlp.cfg.Configuration;
 import org.elasticsearch.plugin.analysis.hanlp.core.HanLPType;
 import org.elasticsearch.plugin.analysis.hanlp.lucene.*;
 
@@ -21,34 +22,29 @@ public class HanLPAnalyzerProvider extends AbstractIndexAnalyzerProvider<Analyze
         super(name, settings);
 
         ConfigurationSub configuration = new ConfigurationSub(env, settings);
+        analyzer = getAnalyzer(hanLPType, configuration);
+    }
+
+    public static Analyzer getAnalyzer(HanLPType hanLPType, Configuration cfg) {
         switch (hanLPType) {
             case HANLP:
-                analyzer = new HanLPAnalyzer(configuration);
-                break;
+                return new HanLPAnalyzer(cfg);
             case STANDARD:
-                analyzer = new HanLPStandardAnalyzer(configuration);
-                break;
+                return new HanLPStandardAnalyzer(cfg);
             case INDEX:
-                analyzer = new HanLPIndexAnalyzer(configuration);
-                break;
+                return new HanLPIndexAnalyzer(cfg);
             case NLP:
-                analyzer = new HanLPNLPAnalyzer(configuration);
-                break;
+                return new HanLPNLPAnalyzer(cfg);
             case CRF:
-                analyzer = new HanLPCRFAnalyzer(configuration);
-                break;
+                return new HanLPCRFAnalyzer(cfg);
             case N_SHORT:
-                analyzer = new HanLPNShortAnalyzer(configuration);
-                break;
+                return new HanLPNShortAnalyzer(cfg);
             case DIJKSTRA:
-                analyzer = new HanLPDijkstraAnalyzer(configuration);
-                break;
+                return new HanLPDijkstraAnalyzer(cfg);
             case SPEED:
-                analyzer = new HanLPSpeedAnalyzer(configuration);
-                break;
+                return new HanLPSpeedAnalyzer(cfg);
             default:
-                analyzer = null;
-                break;
+                return null;
         }
     }
 

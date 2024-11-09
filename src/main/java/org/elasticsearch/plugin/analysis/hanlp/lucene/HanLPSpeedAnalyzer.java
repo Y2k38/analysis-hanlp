@@ -3,7 +3,7 @@ package org.elasticsearch.plugin.analysis.hanlp.lucene;
 import com.hankcs.hanlp.seg.Other.DoubleArrayTrieSegment;
 import com.hankcs.hanlp.seg.Segment;
 import org.apache.lucene.analysis.Analyzer;
-import org.elasticsearch.plugin.analysis.hanlp.ConfigurationSub;
+import org.elasticsearch.plugin.analysis.hanlp.cfg.Configuration;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -18,9 +18,9 @@ public class HanLPSpeedAnalyzer extends Analyzer {
     /**
      * 分词配置
      */
-    private final ConfigurationSub configuration;
+    private final Configuration configuration;
 
-    public HanLPSpeedAnalyzer(ConfigurationSub configuration) {
+    public HanLPSpeedAnalyzer(Configuration configuration) {
         super();
         this.configuration = configuration;
         enableConfiguration();

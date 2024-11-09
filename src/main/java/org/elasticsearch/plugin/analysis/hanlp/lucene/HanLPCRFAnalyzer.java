@@ -3,7 +3,7 @@ package org.elasticsearch.plugin.analysis.hanlp.lucene;
 import com.hankcs.hanlp.model.crf.CRFLexicalAnalyzer;
 import com.hankcs.hanlp.seg.Segment;
 import org.apache.lucene.analysis.Analyzer;
-import org.elasticsearch.plugin.analysis.hanlp.ConfigurationSub;
+import org.elasticsearch.plugin.analysis.hanlp.cfg.Configuration;
 import org.elasticsearch.plugin.analysis.hanlp.model.CRFNERecognizerInstance;
 import org.elasticsearch.plugin.analysis.hanlp.model.CRFPOSTaggerInstance;
 import org.elasticsearch.plugin.analysis.hanlp.model.CRFSegmenterInstance;
@@ -22,9 +22,9 @@ public class HanLPCRFAnalyzer extends Analyzer {
     /**
      * 分词配置
      */
-    private final ConfigurationSub configuration;
+    private final Configuration configuration;
 
-    public HanLPCRFAnalyzer(ConfigurationSub configuration) {
+    public HanLPCRFAnalyzer(Configuration configuration) {
         super();
         this.configuration = configuration;
     }
