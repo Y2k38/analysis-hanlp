@@ -35,6 +35,7 @@ ES现仅支持read、readlink权限，但hanlp程序需要读写缓存文件。�
 ```bash
 # cd /path/to/elasticsearch
 
+# hanlp.properties配置文件已将root目录指向config/analysis-hanlp/
 mv plugins/analysis-hanlp/data config/analysis-hanlp/
 ```
 
@@ -42,9 +43,7 @@ mv plugins/analysis-hanlp/data config/analysis-hanlp/
 
 特性列表：[KennFalcon/elasticsearch-analysis-hanlp](https://github.com/KennFalcon/elasticsearch-analysis-hanlp)
 
-**注意：** 当前版本移除KennFalcon版本的local词典热更新
-
-### 分词方式
+支持的分词方式有
 
 * hanlp: hanlp默认分词
 * hanlp_standard: 标准分词
@@ -54,6 +53,8 @@ mv plugins/analysis-hanlp/data config/analysis-hanlp/
 * hanlp_n_short: N-最短路分词
 * hanlp_dijkstra: 最短路分词
 * hanlp_speed: 极速词典分词
+
+**注意：** 当前版本移除KennFalcon版本的local词典热更新
 
 ## 示例
 
