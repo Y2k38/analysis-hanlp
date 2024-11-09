@@ -3,7 +3,7 @@ HanLP analysis for Elasticsearch
 
 ## 前言
 
-由于*KennFalcon*、*KennFalcon*以及*muxiaobai* 的`elasticsearch-analysis-hanlp`
+由于*KennFalcon*、*AnyListen*以及*muxiaobai* 的`elasticsearch-analysis-hanlp`
 插件均已停止更新，不得已自己改写了一个，代码也参考了IK分词器以及Elasticsearch官方给的一些example
 
 注意：这是一个classic plugin，不是stable plugin，每次版本变更都需要重新编译测试
