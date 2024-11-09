@@ -10,17 +10,43 @@ HanLP analysis for Elasticsearch
 
 ## 安装
 
-1. 下载仓库并编译
+1. 下载仓库
 
 ```bash
 git clone https://github.com/Y2k38/analysis-hanlp.git
+```
 
+2. 安装依赖
+
+hanlp部分辞典超过100M，无法推送到github，需要手动安装
+
+```bash
 cd analysis-hanlp
 
+# 切换到3.8
+pyenv global 3.8
+
+# 全局安装可以忽略下面两条命令
+python -m venv ./.venv
+source ./.venv/bin/activate
+
+# 安装pyhanlp
+pip install pyhanlp
+
+# 下载词典以及model数据
+hanlp --version
+
+# 覆盖
+cp -r ./.venv/lib/python3.8/site-packages/pyhanlp/static/data ./src/main/plugin-metadata/
+```
+
+3. 编译打包
+
+```bash
 ./gradlew build
 ```
 
-2. 执行命令安装
+4. 执行命令安装
 
 ```bash
 cd /path/to/elasticsearch
@@ -28,7 +54,7 @@ cd /path/to/elasticsearch
 ./bin/elasticsearch-plugin install file:///path/to/analysis-hanlp/build/distributions/elasticsearch-analysis-hanlp-x.y.z.zip
 ```
 
-3. 文件权限hack
+5. 文件权限hack
 
 ES现仅支持read、readlink权限，但hanlp程序需要读写缓存文件。一个解决方法是，将数据放在config目录，该目录支持读写，即使是security配置只写了read，非常hack的做法
 
