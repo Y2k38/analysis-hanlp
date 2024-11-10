@@ -1,7 +1,5 @@
 package org.elasticsearch.plugin.analysis.hanlp;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.elasticsearch.SpecialPermission;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.core.PathUtils;
@@ -13,8 +11,6 @@ import java.io.File;
 import java.nio.file.Path;
 
 public class ConfigurationSub extends Configuration {
-    private static final Logger logger = LogManager.getLogger(ConfigurationSub.class);
-
     private Environment environment;
 
     public ConfigurationSub(Environment env, Settings settings) {
@@ -53,9 +49,6 @@ public class ConfigurationSub extends Configuration {
     public Path getConfDir() {
         return this.environment.configFile().resolve(AnalysisHanLPPlugin.PLUGIN_NAME);
     }
-
-    // {eshome}/plugin/analysis-hanlp/config
-    // 一般用不到
 
     /**
      * {eshome}/plugin/analysis-hanlp/config
