@@ -17,7 +17,7 @@ public class RemoteMonitor implements Runnable {
 
     private static final Logger logger = LogManager.getLogger(RemoteMonitor.class);
 
-    private static CloseableHttpClient httpclient = HttpClients.createDefault();
+    private static final CloseableHttpClient httpclient = HttpClients.createDefault();
     /*
      * 上次更改时间
      */
@@ -30,7 +30,7 @@ public class RemoteMonitor implements Runnable {
     /*
      * 请求地址
      */
-    private String location;
+    private final String location;
 
     public RemoteMonitor(String location) {
         this.location = location;
@@ -97,7 +97,7 @@ public class RemoteMonitor implements Runnable {
             }
 
         } catch (Exception e) {
-            logger.error("remote_ext_dict {} error!", e, location);
+            logger.error("remote_ext_dict {} error {}!", location, e);
         } finally {
             try {
                 if (response != null) {

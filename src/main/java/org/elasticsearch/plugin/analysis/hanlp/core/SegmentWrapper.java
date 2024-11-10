@@ -97,7 +97,7 @@ public class SegmentWrapper {
             }
             return segment.seg(text);
         });
-        if (termList.size() == 0) return null;
+        if (termList.isEmpty()) return null;
         for (Term term : termList) {
             term.offset += offset;
         }

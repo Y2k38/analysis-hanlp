@@ -21,31 +21,21 @@ public class HanLPAnalyzerProvider extends AbstractIndexAnalyzerProvider<Analyze
     public HanLPAnalyzerProvider(IndexSettings indexSettings, Environment env, String name, Settings settings, HanLPType hanLPType) {
         super(name, settings);
 
-        ConfigurationSub configuration = new ConfigurationSub(env, settings);
-        analyzer = getAnalyzer(hanLPType, configuration);
+        analyzer = getAnalyzer(hanLPType, new ConfigurationSub(env, settings));
     }
 
     public static Analyzer getAnalyzer(HanLPType hanLPType, Configuration cfg) {
-        switch (hanLPType) {
-            case HANLP:
-                return new HanLPAnalyzer(cfg);
-            case STANDARD:
-                return new HanLPStandardAnalyzer(cfg);
-            case INDEX:
-                return new HanLPIndexAnalyzer(cfg);
-            case NLP:
-                return new HanLPNLPAnalyzer(cfg);
-            case CRF:
-                return new HanLPCRFAnalyzer(cfg);
-            case N_SHORT:
-                return new HanLPNShortAnalyzer(cfg);
-            case DIJKSTRA:
-                return new HanLPDijkstraAnalyzer(cfg);
-            case SPEED:
-                return new HanLPSpeedAnalyzer(cfg);
-            default:
-                return null;
-        }
+        return switch (hanLPType) {
+            case HANLP -> new HanLPAnalyzer(cfg);
+            case STANDARD -> new HanLPStandardAnalyzer(cfg);
+            case INDEX -> new HanLPIndexAnalyzer(cfg);
+            case NLP -> new HanLPNLPAnalyzer(cfg);
+            case CRF -> new HanLPCRFAnalyzer(cfg);
+            case N_SHORT -> new HanLPNShortAnalyzer(cfg);
+            case DIJKSTRA -> new HanLPDijkstraAnalyzer(cfg);
+            case SPEED -> new HanLPSpeedAnalyzer(cfg);
+            default -> throw new UnsupportedOperationException("hanlpType: " + hanLPType.toString() + " not supported");
+        };
     }
 
     public static HanLPAnalyzerProvider getHanLPAnalyzerProvider(IndexSettings indexSettings, Environment env, String name, Settings settings) {

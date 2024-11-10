@@ -76,18 +76,11 @@ public class PorterStemmer {
     /* cons(i) is true <=> b[i] is a consonant. */
 
     private final boolean cons(int i) {
-        switch (b[i]) {
-            case 'a':
-            case 'e':
-            case 'i':
-            case 'o':
-            case 'u':
-                return false;
-            case 'y':
-                return (i == k0) ? true : !cons(i - 1);
-            default:
-                return true;
-        }
+        return switch (b[i]) {
+            case 'a', 'e', 'i', 'o', 'u' -> false;
+            case 'y' -> i == k0 || !cons(i - 1);
+            default -> true;
+        };
     }
 
     /*
@@ -581,9 +574,9 @@ public class PorterStemmer {
     public static void main(String[] args) {
         PorterStemmer s = new PorterStemmer();
 
-        for (int i = 0; i < args.length; i++) {
+        for (String arg : args) {
             try {
-                InputStream in = new FileInputStream(args[i]);
+                InputStream in = new FileInputStream(arg);
                 byte[] buffer = new byte[1024];
                 int bufferLen, offset, ch;
 
@@ -619,7 +612,7 @@ public class PorterStemmer {
 
                 in.close();
             } catch (IOException e) {
-                System.out.println("error reading " + args[i]);
+                System.out.println("error reading " + arg);
             }
         }
     }

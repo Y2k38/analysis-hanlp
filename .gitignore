@@ -4,6 +4,7 @@
 .gradle
 .venv
 
+tmp
 build
 target
 

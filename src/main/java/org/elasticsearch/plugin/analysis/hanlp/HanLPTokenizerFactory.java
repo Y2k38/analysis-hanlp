@@ -76,6 +76,7 @@ public class HanLPTokenizerFactory extends AbstractTokenizerFactory {
 
     @Override
     public Tokenizer create() {
+        // 使用TokenizerBuilder重新配置
         switch (this.hanLPType) {
             case INDEX:
                 configuration.enableIndexMode(true);

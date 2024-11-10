@@ -73,7 +73,7 @@ public class HanLPAnalyzerTests {
     @Test
     public void tokenize_hanlp_nlp_correctly() {
         Configuration cfg = TestUtils.createFakeConfigurationSub();
-        List<String> values = Arrays.asList(tokenize(HanLPType.NLP, cfg, "我新造一个词叫幻想乡你能识别并标注正确词性吗？"));
+        List<String> values = Arrays.asList(tokenize(HanLPType.NLP, cfg, "我新造一个词叫幻想乡你能识别并正确标注词性吗？"));
         assert values.size() >= 15;
         assert values.contains("我");
         assert values.contains("新");
@@ -85,8 +85,8 @@ public class HanLPAnalyzerTests {
         assert values.contains("能");
         assert values.contains("识别");
         assert values.contains("并");
-        assert values.contains("标注");
         assert values.contains("正确");
+        assert values.contains("标注");
         assert values.contains("词性");
         assert values.contains("吗");
         assert values.contains("？");

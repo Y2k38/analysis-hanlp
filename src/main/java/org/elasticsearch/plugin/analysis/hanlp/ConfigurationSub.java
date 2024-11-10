@@ -44,13 +44,25 @@ public class ConfigurationSub extends Configuration {
         }
     }
 
-    // {eshome}/config/analysis-hanlp/config
+    /**
+     * {eshome}/config/analysis-hanlp
+     *
+     * @return 配置目录
+     */
     @Override
     public Path getConfDir() {
         return this.environment.configFile().resolve(AnalysisHanLPPlugin.PLUGIN_NAME);
     }
 
     // {eshome}/plugin/analysis-hanlp/config
+    // 一般用不到
+
+    /**
+     * {eshome}/plugin/analysis-hanlp/config
+     * 一般用不到，因为默认使用{eshome}/config/analysis-hanlp
+     *
+     * @return 配置目录
+     */
     @Override
     public Path getConfigInPluginDir() {
         return PathUtils

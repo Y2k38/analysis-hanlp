@@ -17,6 +17,7 @@ import org.elasticsearch.plugins.Plugin;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.AccessController;
@@ -31,33 +32,31 @@ public class AnalysisHanLPPlugin extends Plugin implements AnalysisPlugin {
     public static String PLUGIN_NAME = "analysis-hanlp";
 
     public AnalysisHanLPPlugin(Settings settings) {
-        // 下面两个方法需要访问model数据路径，需要提前初始化
-        //
-        String eshome = null;
-        if (Environment.PATH_HOME_SETTING.exists(settings)) {
-            eshome = Environment.PATH_HOME_SETTING.get(settings);
-        }
-        if (eshome == null) {
+        // 下面两个注册方法需要访问model的数据路径，需要提前配置好hanlp.properties路径
+        if (!Environment.PATH_HOME_SETTING.exists(settings)) {
             throw new IllegalStateException(Environment.PATH_HOME_SETTING.getKey() + " is not configured");
         }
 
+        String eshome = Environment.PATH_HOME_SETTING.get(settings);
+
+        // 如果是用elasticsearch-plugin安装，配置文件都会放在config/analysis-hanlp目录
         Path conf_dir = PathUtils.get(eshome, "config", AnalysisHanLPPlugin.PLUGIN_NAME);
         Path configFile = conf_dir.resolve(CONFIG_FILE_NAME);
 
+        FileInputStream stream = null;
         try {
             logger.info("try load config from {}", configFile);
-            new FileInputStream(configFile.toFile());
+            stream = new FileInputStream(configFile.toFile());
             Predefine.HANLP_PROPERTIES_PATH = configFile.toString();
         } catch (FileNotFoundException e) {
-            conf_dir = PathUtils.get(eshome, "plugins", AnalysisHanLPPlugin.PLUGIN_NAME, "config");
-            configFile = conf_dir.resolve(CONFIG_FILE_NAME);
-            try {
-                logger.info("try load config from {}", configFile);
-                new FileInputStream(configFile.toFile());
-                Predefine.HANLP_PROPERTIES_PATH = configFile.toString();
-            } catch (FileNotFoundException ex) {
-                // We should report origin exception
-                logger.error("hanlp-analyzer", e);
+            logger.error("hanlp-analyzer", e);
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    logger.error("hanlp-analyzer close file stream error", e);
+                }
             }
         }
     }
@@ -69,6 +68,7 @@ public class AnalysisHanLPPlugin extends Plugin implements AnalysisPlugin {
         extra.put("hanlp", HanLPTokenizerFactory::getHanLPTokenizerFactory);
         extra.put("hanlp_standard", HanLPTokenizerFactory::getHanLPStandardTokenizerFactory);
         extra.put("hanlp_index", HanLPTokenizerFactory::getHanLPIndexTokenizerFactory);
+        // 没有model文件就不注册
         if (FileSystemUtils.exists(Paths.get(
                 AccessController.doPrivileged((PrivilegedAction<String>) () -> HanLP.Config.PerceptronCWSModelPath)
         ).toAbsolutePath())) {
@@ -99,6 +99,7 @@ public class AnalysisHanLPPlugin extends Plugin implements AnalysisPlugin {
         extra.put("hanlp", HanLPAnalyzerProvider::getHanLPAnalyzerProvider);
         extra.put("hanlp_standard", HanLPAnalyzerProvider::getHanLPStandardAnalyzerProvider);
         extra.put("hanlp_index", HanLPAnalyzerProvider::getHanLPIndexAnalyzerProvider);
+        // 没有model文件就不注册
         if (FileSystemUtils.exists(Paths.get(
                 AccessController.doPrivileged((PrivilegedAction<String>) () -> HanLP.Config.PerceptronCWSModelPath)
         ).toAbsolutePath())) {
