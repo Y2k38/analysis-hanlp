@@ -1,0 +1,3 @@
+src/main/plugin-metadata/data/model/dependency/NNParserModel.txt.bin filter=lfs diff=lfs merge=lfs -text
+src/main/plugin-metadata/data/model/perceptron/large/cws.bin filter=lfs diff=lfs merge=lfs -text
+src/main/plugin-metadata/data/model/perceptron/pku1998/pos.bin filter=lfs diff=lfs merge=lfs -text
